@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <form action="#"
+          th:action="@{/edit}"
+          th:object="${user}"
+          method="post">
+        <input hidden="hidden" type="number" th:field="*{id}" id="idAdd" placeholder="id">
+        <label for="firstNameUpdate">Имя</label>
+        <input type="text" th:field="*{firstName}" id="firstNameUpdate" placeholder="Имя">
+        <br>
+        <label for="lastNameUpdate">Фамилия</label>
+        <input type="text" th:field="*{lastName}" id="lastNameUpdate" placeholder="Фамилия">
+        <br>
+        <label for="phoneUpdate">Телефон</label>
+        <input type="text" th:field="*{phone}" id="phoneUpdate" placeholder="Телефон">
+        <br>
+        <label for="emailUpdate">Эл. почта</label>
+        <input type="text" th:field="*{email}" id="emailUpdate" placeholder="Эл. почта">
+        <br>
+        <input type="submit" value="Изменить пользователя">
+    </form>
+</div>
+</body>
+</html>
