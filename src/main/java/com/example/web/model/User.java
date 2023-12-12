@@ -1,88 +1,90 @@
 package com.example.web.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table (name = "users")
+@Table(name = "users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "first_name")
+    private Integer id;
+    @Column(name = "firstname")
     private String firstName;
-    @Column(name = "last_name")
-    private String lastName;
-    @Column(name = "phone")
-    private int phone;
-    @Column(name = "email")
-    private String email;
+    @Column(name = "secondname")
+    private String secondName;
+    @Column(name = "age")
+    private Integer age;
 
-    public User(){
+    public User() {
 
     }
 
-    public User(String firstName, String lastName, int phone, String email) {
+    public User(String firstName, String secondName, Integer age) {
         this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.email = email;
+        this.secondName = secondName;
+        this.age = age;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {
         return id;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
-    public int getPhone() {
-        return phone;
-    }
-
-    public void setPhone(int phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public Integer getAge() {
+        return age;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public String toString() {
+        return firstName + " " + secondName;
+    }
 
-        User user = (User) o;
-
-        if (id != user.id) return false;
-        if (phone != user.phone) return false;
-        if (!Objects.equals(firstName, user.firstName)) return false;
-        if (!Objects.equals(lastName, user.lastName)) return false;
-        return Objects.equals(email, user.email);
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+        return user.id == id &&
+                Objects.equals(secondName, user.secondName) &&
+                Objects.equals(firstName, user.firstName) &&
+                user.age == age;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, phone, email);
+        int result = firstName != null ? firstName.hashCode() : 0;
+        result += secondName != null ? secondName.hashCode() : 0;
+        result += age;
+        result += id * 29;
+        return result;
     }
 }

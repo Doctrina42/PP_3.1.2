@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование пользователя</title>
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<form th:method="POST" th:action="@{/updateUser}" th:object="${user}">
+    <input type="hidden" th:field="*{id}" />
+    <label for="firstname">Введите имя: </label>
+    <input type="text" th:field="*{firstName}" th:value="${user.getFirstName()}"  id="firstname">
+    <label for="secondName">Введите фамилию: </label>
+    <input type="text" th:field="*{secondName}" th:value="${user.getSecondName()}" id="secondName">
+    <label for="age">Введите возраст: </label>
+    <input type="text" th:field="*{age}" th:value="${user.getAge()}" id="age">
+    <br/>
+    <input type="submit" value="Сохранить"/>
+</form>
+</body>
+</html>

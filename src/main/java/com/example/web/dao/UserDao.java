@@ -6,10 +6,13 @@ import com.example.web.model.User;
 import java.util.List;
 
 public interface UserDao {
-    List<User> getUsersList();
-    User getUser(int id);
-    void addUser(User user);
-    void deleteUser(int id);
-    void editUser(User user);
+    void createUser(User user);
 
+    List<User> getAllUsers();
+
+    User getUserById(Integer id);
+
+    void updateUser(User user);
+
+    void deleteUserById(Integer id);
 }

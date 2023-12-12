@@ -1,44 +1,49 @@
 package com.example.web.dao;
 
-import com.example.web.model.User;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import com.example.web.model.User;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
-public class UserDaoImpl implements UserDao{
+@Transactional
+public class UserDaoImpl implements UserDao {
 
-    private EntityManager entityManager;
+    private final EntityManager manager;
 
-    @PersistenceContext
-    public void setEntityManager (EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public UserDaoImpl(EntityManager manager) {
+        this.manager = manager;
     }
 
     @Override
-    public List<User> getUsersList() {
-        return entityManager.createQuery("SELECT u FROM User u",User.class).getResultList();
+    public void createUser(User user) {
+        manager.persist(user);
     }
 
     @Override
-    public User getUser(int id) {
-        return entityManager.find(User.class, id);
+    @Transactional(readOnly = true)
+    public List<User> getAllUsers() {
+        return manager.createQuery("SELECT u FROM User u", User.class).getResultList();
     }
 
     @Override
-    public void addUser(User user) {
-        entityManager.persist(user);
+    @Transactional(readOnly = true)
+    public User getUserById(Integer id) {
+        return manager.find(User.class, id);
     }
 
     @Override
-    public void deleteUser(int id) {
-        entityManager.remove(entityManager.find(User.class, id));
+    public void updateUser(User user) {
+        manager.merge(user);
     }
 
     @Override
-    public void editUser(User user) {
-        entityManager.merge(user);
+    public void deleteUserById(Integer id) {
+        User user = manager.find(User.class, id);
+        if (user != null) {
+            manager.remove(user);
+        }
     }
 }
